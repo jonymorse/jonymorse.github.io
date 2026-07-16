@@ -70,6 +70,8 @@ main {
   transition: filter 160ms ease;
 }
 
+.paper img.project-render { padding: 12px; object-fit: contain; background: #ffffff; }
+
 .paper-placeholder {
   width: 180px;
   aspect-ratio: 3 / 2;

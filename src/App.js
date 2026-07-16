@@ -27,6 +27,16 @@ const App = () => {
             </div>
             <span className="paper-link">Project ↗</span>
           </a>
+
+          <a className="paper" href="https://jonymorse.com/SensorFusion-Models/portfolio/headmount/">
+            <img className="project-render" src={asset('/assets/mq3s-mount-preview.png')} alt="Meta Quest 3S mount with a GoPro-compatible attachment" />
+            <div>
+              <h3>Meta Quest 3S mount</h3>
+              <p>A custom headset mount with a GoPro-compatible attachment underneath for securing a camera or sensor.</p>
+              <p className="journal">Hardware · Sensor fusion · CAD</p>
+            </div>
+            <span className="paper-link">Project ↗</span>
+          </a>
         </section>
       </main>
 
