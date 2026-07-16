@@ -1,36 +1,109 @@
 :root {
-  --bg-1: #fff6d1;
-  --bg-2: #c2f3ff;
-  --ink: #161718;
+  --bg: #f4f5f2;
+  --text: #1b1d1c;
+  --muted: #5d6461;
+  --quiet: #858c88;
+  --line: rgba(27, 29, 28, .14);
+  --accent: #496b78;
+  --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
-.simple-home {
-  min-height: 100vh;
+* { box-sizing: border-box; }
+html { min-width: 320px; background: var(--bg); }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); }
+a { color: inherit; }
+
+.page {
+  width: 100%;
+  min-height: 100svh;
+  padding: 0 clamp(20px, 3vw, 48px);
   display: grid;
-  place-items: center;
-  padding: 1.5rem;
-  background: radial-gradient(circle at 20% 20%, var(--bg-1), transparent 55%),
-    radial-gradient(circle at 80% 75%, var(--bg-2), transparent 50%),
-    #f8f9f4;
+  grid-template-rows: 72px auto auto;
 }
 
-.simple-line {
-  margin: 0;
-  color: var(--ink);
-  font-size: clamp(1.4rem, 2.8vw, 2.6rem);
-  letter-spacing: 0.02em;
-  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-  animation: soft-glow 3.2s ease-in-out infinite;
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
 }
 
-@keyframes soft-glow {
-  0%,
-  100% {
-    text-shadow: 0 0 0 rgba(22, 23, 24, 0);
-    transform: translateY(0);
-  }
-  50% {
-    text-shadow: 0 0 18px rgba(22, 23, 24, 0.25);
-    transform: translateY(-2px);
-  }
+.owner { text-decoration: none; font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
+.site-header nav { display: flex; gap: 24px; }
+.site-header nav a { color: var(--muted); font-size: 15px; text-underline-offset: 5px; }
+.site-header nav a:hover { color: var(--accent); }
+
+main {
+  width: min(1040px, 100%);
+  margin: 0 auto;
+  padding: clamp(52px, 6vw, 76px) 0 0;
+}
+
+.research {
+  width: min(1040px, 100%);
+  margin: 0 auto;
+  padding: clamp(48px, 6vw, 72px) 0 clamp(64px, 8vw, 110px);
+}
+
+.section-head { padding: 0 0 18px; border-bottom: 1px solid var(--line); }
+.section-head h2 { margin: 0; font-size: 21px; font-weight: 550; letter-spacing: -.02em; }
+
+.paper {
+  padding: 28px 0;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: start;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+}
+
+.paper img {
+  width: 180px;
+  aspect-ratio: 3 / 2;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  object-fit: cover;
+  filter: saturate(.78) contrast(.96);
+  transition: filter 160ms ease;
+}
+
+.paper-placeholder {
+  width: 180px;
+  aspect-ratio: 3 / 2;
+  padding: 14px;
+  display: flex;
+  align-items: flex-end;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #e9ece9;
+}
+
+.paper-placeholder span { color: var(--quiet); font: 500 10px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+.paper h3 { max-width: 780px; margin: 0; font-size: clamp(20px, 2vw, 27px); line-height: 1.22; letter-spacing: -.025em; font-weight: 520; }
+.paper p { margin: 14px 0 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.paper p.journal { margin-top: 4px; color: var(--quiet); }
+.paper-link { padding-top: 4px; color: var(--accent); font-size: 13px; white-space: nowrap; }
+.paper:hover h3 { color: var(--accent); }
+.paper:hover img { filter: saturate(1) contrast(1); }
+
+@media (max-width: 900px) {
+  .page { grid-template-rows: 64px auto auto; }
+  .paper { grid-template-columns: 150px minmax(0, 1fr) auto; }
+  .paper img, .paper-placeholder { width: 150px; }
+}
+
+@media (max-width: 520px) {
+  .page { padding: 0 16px; }
+  .owner { font-size: 16px; }
+  .site-header nav { gap: 14px; }
+  .site-header nav a { font-size: 14px; }
+  main { padding-top: 42px; }
+  .research { padding: 40px 0 60px; }
+  .paper { grid-template-columns: 1fr auto; gap: 18px 14px; }
+  .paper img, .paper-placeholder { grid-column: 1 / -1; width: 100%; max-height: 210px; }
+  .paper h3 { font-size: 20px; }
+  .paper p { font-size: 14px; }
 }
