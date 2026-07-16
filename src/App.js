@@ -1,15 +1,49 @@
+import { useEffect, useState } from 'react';
 import './App.css';
 
 const App = () => {
   const asset = (path) => `${process.env.PUBLIC_URL}${path}`;
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = window.localStorage.getItem('theme');
+    if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+  const [headerCompact, setHeaderCompact] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+  }, [theme]);
+
+  useEffect(() => {
+    const handleScroll = () => setHeaderCompact(window.scrollY > 24);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    window.localStorage.setItem('theme', nextTheme);
+    setTheme(nextTheme);
+  };
 
   return (
     <div className="page">
-      <header className="site-header">
+      <header className={`site-header${headerCompact ? ' is-compact' : ''}`}>
         <a className="owner" href="#home">Jonathan Morse</a>
         <nav aria-label="Primary navigation">
           <a href="https://github.com/jonymorse">GitHub</a>
           <a href="mailto:jemorse55@gmail.com">Contact</a>
+          <button
+            className="theme-toggle"
+            type="button"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            onClick={toggleTheme}
+          >
+            <span aria-hidden="true" />
+          </button>
         </nav>
       </header>
 
